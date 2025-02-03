@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+import plotly
+import plotly.express as px
 
 # Create a connection object.
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -73,6 +75,46 @@ def update_table():
     if not new_df.empty:
         styled_df = new_df.style.apply(highlight_top_3)
         st.write(styled_df)
+        
+        # Create bar chart
+        # Get numeric columns (excluding 'Size')
+        numeric_cols = new_df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+        if 'Size' in numeric_cols:
+            numeric_cols.remove('Size')
+            
+        if numeric_cols:  # Only create chart if we have numeric columns
+            st.subheader("Performance Visualization")
+            
+            # Create grouped bar chart using plotly
+            
+            chart_data = new_df.melt(
+                id_vars=['LLM'],
+                value_vars=numeric_cols,
+                var_name='Metric',
+                value_name='Score'
+            )
+            
+            fig = px.bar(
+                chart_data,
+                x='LLM',
+                y='Score',
+                color='Metric',
+                barmode='group',
+                height=400,
+                title='Performance Metrics by LLM',
+                color_discrete_sequence=px.colors.qualitative.Pastel
+
+            )
+            
+            # Update layout for better readability
+            fig.update_layout(
+                xaxis_title="LLM Model",
+                yaxis_title="Performance",
+                legend_title="Level_Category",
+                plot_bgcolor='white'
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
     else:
         st.write("No data matches the selected filters.")
 
@@ -84,7 +126,7 @@ with col1:
 with col2:
     filter_level=st.radio("Filter CEFR level",["All","A1","A2","B1","B2"])
 with col3:
-    filter_category=st.radio("Filter Test Category",["All","VOCAB","GRAMMAR","RC","LC"])
+    filter_category=st.radio("Filter Test Category",["All","VOCAB","GRAMMAR","RC","LC","total"])
 with col4:
     filter_family=st.selectbox("Select LLM Family:",["All",'Aya','Claude','Command-R','DeepSeek','Falcon','Gemini','Gemma','GLM','GPT','Llama','Mistral','Phi','Qwen','StableLM','WizardLM'])
 filter_size=st.slider("Select size range of LLM parameters:",value=[0,700])
@@ -94,5 +136,3 @@ filter_performance=st.select_slider("Show LLMs with minimum performance of :",op
 
 # Print results.
 update_table()
-#for row in df.itertuples():
-#    st.write(f"{row.llm} has a :{row.A1_total}:")
