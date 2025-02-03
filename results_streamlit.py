@@ -59,7 +59,7 @@ def update_table():
     new_df = new_df[selected_columns]
     
     # Convert Size column to integer
-    new_df['Size'] = new_df['Size']
+    new_df['Size'] = new_df['Size'].astype(int)
     
     if filter_family != "All":
         new_df = new_df[new_df["Family"] == filter_family]
