@@ -124,7 +124,7 @@ col1, col2,col3,col4 = st.columns(4)
 with col1:
     filter_open_closed=st.radio("Filter closed/open LLMs",["All","Open","Closed"])
 with col2:
-    filter_level=st.radio("Filter CEFR level",["All","A1","A2","B1","B2"])
+    filter_level=st.radio("Filter CEFR level",["All","A1","A2","B1","B2","C1","C2"])
 with col3:
     filter_category=st.radio("Filter Test Category",["All","VOCAB","GRAMMAR","RC","LC","total"])
 with col4:
