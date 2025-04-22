@@ -153,9 +153,9 @@ st.markdown(
 col1, col2,col3 = st.columns([1,1,3])
 
 with col1:
-    st.image("./PycharmProjects/pythonProject/logos/LIST_2016_rgb_H75px.png", width=250, use_container_width =False)
+    st.image("./logos/LIST_2016_rgb_H75px.png", width=250, use_container_width =False)
 with col2:
-    st.image("./PycharmProjects/pythonProject/logos/cropped-Logo_INLL_largeur_quadri-Copy-1.png", width=250, use_container_width =False)
+    st.image("./logos/cropped-Logo_INLL_largeur_quadri-Copy-1.png", width=250, use_container_width =False)
 
 st.markdown("<h1 style='text-align: center; color: #537992;font-family: 'Bebas Neue';'><b>HOW WELL DO LLMS UNDERSTAND LUXEMBOURGISH?</b></h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: left;font-family: 'Arial';'>Large Language Models (LLMs) have reshaped the AI landscape in recent years. They are becoming omnipresent, being used by private users and companies alike. However, LLMs are developed mainly for widespread languages such as English, Spanish, or German, leaving languages such as Luxembourgish on the sidelines.  </p>", unsafe_allow_html=True)
